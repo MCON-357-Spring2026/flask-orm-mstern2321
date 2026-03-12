@@ -255,16 +255,14 @@ def students_with_average_above(threshold: float) -> list[Student]:
     percent per grade = score / assignment.max_points * 100
     """
 
-
-    avg_exp = func.avg(Grade.score/Assignment.max_points * 100)
+    avg_expr = func.avg(Grade.score * 100.0 / Assignment.max_points)
     return (
         db.session.query(Student)
-        .join(Assignment)
         .join(Grade)
+        .join(Assignment)
         .group_by(Student.id)
-        .having(avg_exp > threshold)
-        .order_by(avg_exp.desc())
-
+        .having(avg_expr > threshold)
+        .order_by(avg_expr.desc())
         .all()
     )
 
