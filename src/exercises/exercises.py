@@ -257,7 +257,7 @@ def students_with_average_above(threshold: float) -> list[Student]:
 
 
     avg_exp = func.avg(Grade.score/Assignment.max_points * 100)
-    result = (
+    return (
         db.session.query(Student)
         .join(Assignment)
         .join(Grade)
@@ -267,7 +267,6 @@ def students_with_average_above(threshold: float) -> list[Student]:
 
         .all()
     )
-    return result
 
 
 
